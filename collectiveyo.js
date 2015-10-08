@@ -35,6 +35,9 @@ Meteor.methods({
       name: name,
       createdAt: new Date()
     });
+  },
+  deleteMessages: function() {
+    Messages.remove({})
   }
 });
 
