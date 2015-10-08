@@ -1,17 +1,24 @@
-if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
+Messages = new Mongo.Collection("messages");
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
+
+if (Meteor.isClient) {
+
+  Template.body.helpers({
+    messages: function() {
+      return Messages.find({}, {sort: {createdAt: -1}});
     }
   });
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
+  Template.body.events({
+    "submit .form-yo": function (event) {
+      // Prevent default browser form submit
+      event.preventDefault();
+
+      // Get value from form element
+      var name = event.target[0].value;
+
+      // Add a message to the log
+      Meteor.call("addMessage", name);
     }
   });
 }
@@ -21,3 +28,13 @@ if (Meteor.isServer) {
     // code to run on server at startup
   });
 }
+
+Meteor.methods({
+  addMessage: function (name) {
+    Messages.insert({
+      name: name,
+      createdAt: new Date()
+    });
+  }
+});
+

@@ -1,14 +1,37 @@
 <head>
-  <title>collectiveyo</title>
+  <title>CollectiveYo</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+  <h1>CollectiveYo</h1>
 
-  {{> hello}}
+  {{> yobutton}}
+
+  <div class="yo-log">
+    <table>
+      <tbody>
+        {{#each messages}}
+        {{> message}}
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="yobutton">
+  <form class="form-yo">
+    <input type="name" class="input-name" id="input-name" placeholder="Name">
+    <button type="submit">Yo!</button>
+  </form>
+</template>
+
+<template name="message">
+  <tr>
+    <td>
+      <p>{{name}} says Yo!</p>
+    </td>
+    <td>
+      <p>{{livestamp createdAt}}</p>
+    </td>
+  </tr>
 </template>
